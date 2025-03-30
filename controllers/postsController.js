@@ -1,23 +1,38 @@
-const posts = require('../post/posts.js');
-
+const posts = require('../data/posts.js');
+// Index:
 const index = (req, res) => {
-    res.send('Lista di tutti i post');
+    res.json(posts);
 };
 
+// Show
 const show = (req, res) => {
-    res.send(`Dettaglio  post ${req.params.id}`);
+    const post = posts.find(post => post.id === parseInt(req.params.id));  
+    if (!post) {
+        return res.status(404).json({ error: 'Post non trovato' });
+    }  
+    res.json(post);
 };
 
+// Store
 const store = (req, res) => {
     res.send('Post creato ');
 };
 
+// Update
 const update = (req, res) => {
-    res.send(`Post ${req.params.id} aggiornato `);
+    res.send(`Post ${req.params.id} aggiornato`);
 };
 
+// Destroy
 const destroy = (req, res) => {
-    res.send(`Post ${req.params.id} eliminato `);
+    const index = posts.findIndex(post => post.id === parseInt(req.params.id));  
+    if (index === -1) {
+        return res.status(404).json({ error: 'Post non trovato' });
+    }   
+    posts.splice(index, 1);   
+    console.log('Lista post aggiornata:', posts);
+    
+    res.status(204).send();
 };
 
 module.exports = {

@@ -15,6 +15,7 @@ const show = (req, res) => {
 
 // Store
 const store = (req, res) => {
+    console.log("Dati", req.body);
     res.send('Post creato ');
 };
 
@@ -31,7 +32,6 @@ const destroy = (req, res) => {
     }   
     posts.splice(index, 1);   
     console.log('Lista post aggiornata:', posts);
-    
     res.status(204).send();
 };
 

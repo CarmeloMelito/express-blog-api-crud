@@ -11,12 +11,22 @@ const show = (req, res) => {
         return res.status(404).json({ error: 'Post non trovato' });
     }  
     res.json(post);
-};
+}; 
 
 // Store
 const store = (req, res) => {
-    console.log("Dati", req.body);
-    res.send('Post creato ');
+    const newId = posts[posts.length - 1].id + 1; //Nuovo ID
+    const newPost = {
+        id: newId,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    }
+    posts.push(newPost); // Aggiunge il post all'array
+    console.log("Post aggiunto:", newPost);
+    posts.push(newPost);
+    res.json(newPost); // Risposta con il post creato
 };
 
 // Update
